@@ -5,7 +5,7 @@ const Home = (props) => {
   return (
     <div>
       <Jumbotron>
-        <h1 className="display-3">Expense Tracking app!</h1>
+        <h1 className="display-3">Expense Tracker app!</h1>
         <p className="lead">this is an app for a development challenge.</p>
         <hr className="my-2" />
         <p>You want lear more of me? check out my LinkedIn or my Github.</p>
