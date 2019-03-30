@@ -19,7 +19,7 @@ class Category extends Component {
       budget:0
     },
     editCategoryData:{
-      expensecategoryid:0,
+      id:0,
       name:'',
       description:'',
       type:false,
@@ -191,7 +191,7 @@ class Category extends Component {
       
       <div className="App container">
 
-      <h1>Expense Tracker</h1>
+     
 
         <Button className='my-3' color="primary" onClick={this.toggleNewCategoryModal.bind(this)}>Add Category</Button>
 

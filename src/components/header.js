@@ -38,6 +38,9 @@ class Header extends Component {
               <NavItem>
               <NavLink href='/category'>Category</NavLink>
               </NavItem>
+              <NavItem>
+              <NavLink href='/transaction'>Transaction</NavLink>
+              </NavItem>
             </Nav>
           </Collapse>
         </Navbar>
