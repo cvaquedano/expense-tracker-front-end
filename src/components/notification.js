@@ -24,6 +24,10 @@ class Notification extends Component {
     
       }
 
+      alertNotifications(){
+          return this.Notification;
+      }
+
       renderNotificationsItem(){
         let notifications = this.state.notifications.map((notification)=>{
             return (

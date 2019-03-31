@@ -4,6 +4,7 @@ import Home from './home'
 import Category from './category'
 import Transaction from './transaction';
 import Notification from './notification';
+import Balance from './balance';
 
 
 const Main = () => (
@@ -13,6 +14,7 @@ const Main = () => (
       <Route path='/category' component={Category}/>
       <Route path='/transaction' component={Transaction}/>
       <Route path='/notification' component={Notification}/>
+      <Route path='/balance' component={Balance}/>
     
     </Switch>
   </main>

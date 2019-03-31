@@ -43,7 +43,7 @@ class Header extends Component {
               <NavLink href='/notification'>Notification</NavLink>
               </NavItem>
               <NavItem>
-              <NavLink href='/budget'>Monthly Budget</NavLink>
+              <NavLink href='/balance'>Monthly Balance</NavLink>
               </NavItem>
             </Nav>
           </Collapse>
