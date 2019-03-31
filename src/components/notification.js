@@ -27,6 +27,7 @@ class Notification extends Component {
       }
 
       alertNotifications(){
+        this.refreshData()
           return this.Notification;
       }
 

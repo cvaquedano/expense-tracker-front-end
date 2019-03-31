@@ -6,8 +6,11 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
+  NavLink
+  
    } from 'reactstrap';
+
+
 
 class Header extends Component {
 
@@ -16,7 +19,8 @@ class Header extends Component {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      isOpen: false
+      isOpen: false,
+      notifications:[]
     };
   }
   toggle() {
@@ -24,6 +28,8 @@ class Header extends Component {
       isOpen: !this.state.isOpen
     });
   }
+
+
   render() {
     return (
       <div>
@@ -48,6 +54,8 @@ class Header extends Component {
             </Nav>
           </Collapse>
         </Navbar>
+
+      
       </div>
     );
   }
