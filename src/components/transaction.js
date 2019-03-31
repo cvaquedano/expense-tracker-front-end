@@ -1,22 +1,44 @@
 import React, { Component } from 'react';
-import {Table, ButtonGroup} from 'reactstrap'
+import {Table, ButtonGroup,Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
+
 import { Button,Modal, ModalHeader, ModalBody, ModalFooter,Input,FormGroup,Label } from 'reactstrap';
 import Axios from 'axios';
+
+import DatePicker from "react-datepicker"; 
+import "react-datepicker/dist/react-datepicker.css";
+import Moment from 'react-moment';
+import Select from 'react-select'
+
+
 
 class Transaction extends Component {
 
     constructor(props){
         super(props);
         this.onRadioBtnClick = this.onNewRadioBtnClick.bind(this);
+        this.handleNewDateChange = this.handleNewDateChange.bind(this);
+      
     }
+    
+    handleNewDateChange(date) {
+        this.setState(prevState => ({
+            newTransactionData: {
+                ...prevState.newTransactionData,
+                date: date
+            }
+        }));
+      }
+
+      
 
   state={
+    categories:[],  
     transactions:[],
     newTransactionData:{     
       description:'',
       categoryid:0,
       amount:0,
-      date:'2019-01-01'
+      date: new Date()
     },
     editTransactionData:{
       id:0,
@@ -52,8 +74,19 @@ class Transaction extends Component {
     }));
   }
 
+  optionChanged = value => {
+    this.setState(prevState => ({
+        newTransactionData: {
+            ...prevState.newTransactionData,
+            categoryid: value
+        }
+    }));
+  }
+
+
   componentDidMount(){
     this.refreshData();
+    this.getCategoryData();
   }
 
   refreshData(){
@@ -66,10 +99,25 @@ class Transaction extends Component {
     });
 
   }
+  getCategoryData(){
+    Axios.get('http://localhost:3000/category').then((response)=>{
+      this.setState({
+        categories:response.data
+        
+       
+      }) 
+      console.log(this.state.categories)
+    });
+
+  }
+
+  
+
+ 
 
   toggleNewTransactionModal(){
     this.setState({
-      newTransactionModal:!this.state.newTransactionModal
+        newTransactionModal:!this.state.newTransactionModal
     });
 
   }
@@ -91,13 +139,13 @@ class Transaction extends Component {
       this.refreshData();
       this.setState({
        
-        newTrasactionModal:false,
+        newTransactionModal:false,
 
         newTransactionData:{
             description:'',
             categoryid:0,
             amount:0,
-            date:null
+            date:new Date()
         }
         });
     });
@@ -163,6 +211,9 @@ class Transaction extends Component {
 
   render() {
 
+
+
+
     let transactions = this.state.transactions.map((transaction)=>{
       return (
       <tr key={transaction.id}>
@@ -171,7 +222,8 @@ class Transaction extends Component {
         <td>{transaction.categoryid}</td>       
         
         <td>{transaction.amount}</td>
-        <td>{transaction.date}</td>
+
+        <td>  <Moment format="YYYY/MM/DD" date={transaction.date} /></td>
         <td>
           <Button color="success" 
                   size="sm" 
@@ -186,7 +238,15 @@ class Transaction extends Component {
       )
     });
 
+    let categories = this.state.categories.map((category)=>{
+        return (
+            <option value={category.id}>{category.name}</option>      
+  
+        )
+      });
+
     return (
+        
       
       <div className="App container">
 
@@ -209,14 +269,17 @@ class Transaction extends Component {
             </FormGroup>
             <FormGroup>
               <Label for="category">Category</Label>
-              <Input  id="category" 
-                      placeholder="category?" 
-                      value={this.state.newTransactionData.categoryid}
-                      onChange={(e)=>{
-                        let {newTransactionData}= this.state;
-                        newTransactionData.categoryid=e.target.value;
-                        this.setState({newTransactionData})
-                      }} />            
+              <div>
+              <select value={this.state.newTransactionData.categoryid} 
+              onChange={(e)=>{
+                let {newTransactionData}= this.state;
+                newTransactionData.categoryid=e.target.value;
+                this.setState({newTransactionData})
+              }}>
+                    {categories}
+                </select>
+              </div>
+            
             </FormGroup>
             <FormGroup>
               <Label for="amount">Amount</Label>
@@ -231,14 +294,14 @@ class Transaction extends Component {
             </FormGroup>
             <FormGroup>
               <Label for="date">Date</Label>
-              <Input  id="date" 
+             <div>
+             <DatePicker
+               selected={this.state.newTransactionData.date}
+               onChange={this.handleNewDateChange}/>
+
+             </div>
               
-              value={this.state.newTransactionData.date}
-              onChange={(e)=>{
-                let {newTransactionData}= this.state;
-                newTransactionData.date=e.target.value;
-                this.setState({newTransactionData})
-              }}/>            
+              
             </FormGroup>
           </ModalBody>
           <ModalFooter>
