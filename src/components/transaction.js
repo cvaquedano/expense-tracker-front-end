@@ -17,6 +17,7 @@ class Transaction extends Component {
         super(props);
         this.onRadioBtnClick = this.onNewRadioBtnClick.bind(this);
         this.handleNewDateChange = this.handleNewDateChange.bind(this);
+        this.handleEditDateChange = this.handleEditDateChange.bind(this);
       
     }
     
@@ -412,9 +413,9 @@ class Transaction extends Component {
           <tr>
             <th>Id</th>
             <th>Description</th>
-            <th>category</th>
-            <th>amount</th>
-            <th>data</th>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Date</th>
             <th>Action</th>
 
           </tr>

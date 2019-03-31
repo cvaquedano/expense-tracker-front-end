@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom'
 import Home from './home'
 import Category from './category'
 import Transaction from './transaction';
+import Notification from './notification';
 
 
 const Main = () => (
@@ -11,6 +12,7 @@ const Main = () => (
       <Route exact path='/' component={Home}/>
       <Route path='/category' component={Category}/>
       <Route path='/transaction' component={Transaction}/>
+      <Route path='/notification' component={Notification}/>
     
     </Switch>
   </main>
