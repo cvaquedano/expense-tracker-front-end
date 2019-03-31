@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Table, ButtonGroup,Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
+import {Table} from 'reactstrap'
 
 import { Button,Modal, ModalHeader, ModalBody, ModalFooter,Input,FormGroup,Label } from 'reactstrap';
 import Axios from 'axios';
@@ -7,7 +7,7 @@ import Axios from 'axios';
 import DatePicker from "react-datepicker"; 
 import "react-datepicker/dist/react-datepicker.css";
 import Moment from 'react-moment';
-import Select from 'react-select'
+
 
 
 
@@ -29,11 +29,21 @@ class Transaction extends Component {
         }));
       }
 
+      handleEditDateChange(date) {
+        this.setState(prevState => ({
+            editTransactionData: {
+                ...prevState.editTransactionData,
+                date: date
+            }
+        }));
+      }
+
       
 
   state={
     categories:[],  
     transactions:[],
+
     newTransactionData:{     
       description:'',
       categoryid:0,
@@ -45,7 +55,7 @@ class Transaction extends Component {
       description:'',
       categoryid:0,
       amount:0,
-      date:'2019-01-01'
+      date:new Date()
     },
     deleteTransactionData:{
       id:0,
@@ -74,7 +84,7 @@ class Transaction extends Component {
     }));
   }
 
-  optionChanged = value => {
+  optionCategoryChanged = value => {
     this.setState(prevState => ({
         newTransactionData: {
             ...prevState.newTransactionData,
@@ -102,11 +112,10 @@ class Transaction extends Component {
   getCategoryData(){
     Axios.get('http://localhost:3000/category').then((response)=>{
       this.setState({
-        categories:response.data
-        
+        categories:response.data       
        
       }) 
-      console.log(this.state.categories)
+     
     });
 
   }
@@ -129,6 +138,7 @@ class Transaction extends Component {
   }
 
   toggleDeleteTransactionModal(){
+      console.log("Entro a toggleDeleteTransactionModal")
     this.setState({
         deleteTransactionModal:!this.state.deleteTransactionModal
     });
@@ -194,56 +204,70 @@ class Transaction extends Component {
 
   }
 
-  deleteTransaction(id,name){
+  deleteTransaction(id,description){
     this.setState({
-      deleteTransactionData:{id,name},
-      delteTransactionModal:!this.state.delteTransactionModal
+      deleteTransactionData:{id,description},
+      deleteTransactionModal:!this.state.deleteTransactionModal
     });
   }
 
   editTransaction(id,description,categoryid,amount,date){
+      console.log(date);
     this.setState({
-      editCategoryData:{id,description,categoryid,amount,date},
-      editCategoryModal:!this.state.editTransactionModal
+      editTransactionData:{id,description,categoryid,amount,date},
+      editTransactionModal:!this.state.editTransactionModal
     });
+
+  
+
+  }
+
+  renderTransactionItem(){
+    let transactions = this.state.transactions.map((transaction)=>{
+        return (
+        <tr key={transaction.id}>
+          <td>{transaction.id}</td>
+          <td>{transaction.description}</td>
+          <td>{transaction.categoryname}</td>       
+          
+          <td>{transaction.amount}</td>
+  
+          <td>  <Moment format="YYYY/MM/DD" date={transaction.date} /></td>
+          <td>
+            <Button color="success" 
+                    size="sm" 
+                    className="mr-2" 
+                    onClick={this.editTransaction.bind(this,transaction.id,transaction.description,transaction.categoryid,transaction.amount,transaction.date)}>
+                    Edit
+            </Button>
+            <Button color="danger" size="sm" onClick={this.deleteTransaction.bind(this,transaction.id,transaction.description)} >Delete</Button>
+          </td>
+        </tr>
+  
+        )
+      });
+
+      return transactions;
+
+  }
+
+  renderCategoryOptionItem(){
+    let categories = this.state.categories.map((category)=>{
+        return (
+            <option key={category.id} value={category.id}>{category.name}</option>      
+  
+        )
+      });
+
+      return categories;
 
   }
 
   render() {
 
+    let transactions=this.renderTransactionItem();
 
-
-
-    let transactions = this.state.transactions.map((transaction)=>{
-      return (
-      <tr key={transaction.id}>
-        <td>{transaction.id}</td>
-        <td>{transaction.description}</td>
-        <td>{transaction.categoryid}</td>       
-        
-        <td>{transaction.amount}</td>
-
-        <td>  <Moment format="YYYY/MM/DD" date={transaction.date} /></td>
-        <td>
-          <Button color="success" 
-                  size="sm" 
-                  className="mr-2" 
-                  onClick={this.editTransaction.bind(this,transaction.id,transaction.description,transaction.categoryid,transaction.amount,transaction.data)}>
-                  Edit
-          </Button>
-          <Button color="danger" size="sm" onClick={this.deleteTransaction.bind(this,transaction.id,transaction.description)} >Delete</Button>
-        </td>
-      </tr>
-
-      )
-    });
-
-    let categories = this.state.categories.map((category)=>{
-        return (
-            <option value={category.id}>{category.name}</option>      
-  
-        )
-      });
+    let categories = this.renderCategoryOptionItem();
 
     return (
         
@@ -311,7 +335,7 @@ class Transaction extends Component {
         </Modal>
         
         <Modal isOpen={this.state.editTransactionModal} toggle={this.toggleEditTransactionModal.bind(this)}>
-                <ModalHeader toggle={this.toggleEditTransactionModal.bind(this)}>Edit Category</ModalHeader>
+                <ModalHeader toggle={this.toggleEditTransactionModal.bind(this)}>Edit Transaction</ModalHeader>
                 <ModalBody>
                   
                   <FormGroup>
@@ -326,15 +350,17 @@ class Transaction extends Component {
                             }} />            
                   </FormGroup>
                   <FormGroup>
-                    <Label for="category">Category</Label>
-                    <Input  id="category" 
-                           
-                            value={this.state.editTransactionData.categoryid}
-                            onChange={(e)=>{
-                              let {editTransactionData}= this.state;
-                              editTransactionData.categoryid=e.target.value;
-                              this.setState({editTransactionData})
-                            }} />            
+                  <Label for="category">Category</Label>
+                    <div>
+                    <select value={this.state.editTransactionData.categoryid} 
+                    onChange={(e)=>{
+                        let {editTransactionData}= this.state;
+                        editTransactionData.categoryid=e.target.value;
+                        this.setState({editTransactionData})
+                    }}>
+                            {categories}
+                        </select>
+                    </div>         
                   </FormGroup>
                   <FormGroup>
                     <Label for="amount">Amount</Label>
@@ -349,15 +375,13 @@ class Transaction extends Component {
                           
                   </FormGroup>
                   <FormGroup>
-                    <Label for="date">Date</Label>
-                    <Input  id="date" 
-                   
-                    value={this.state.editTransactionData.date}
-                    onChange={(e)=>{
-                      let {editTransactionData}= this.state;
-                      editTransactionData.date=e.target.value;
-                      this.setState({editTransactionData})
-                    }}/> 
+                  <Label for="date">Date</Label>
+                    <div>
+                    <DatePicker
+                    selected={this.state.editTransactionData.date}
+                    onChange={this.handleEditDateChange}/>
+
+                    </div>
                           
                   </FormGroup>
                 </ModalBody>
@@ -381,8 +405,6 @@ class Transaction extends Component {
                   <Button color="secondary" onClick={this.toggleDeleteTransactionModal.bind(this)}>Cancel</Button>
                 </ModalFooter>
               </Modal>
-
-
 
 
       <Table>
