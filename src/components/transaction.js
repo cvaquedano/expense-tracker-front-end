@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Table} from 'reactstrap'
+import "./style.css";
 
 import { Button,Modal, ModalHeader, ModalBody, ModalFooter,Input,FormGroup,Label } from 'reactstrap';
 import Axios from 'axios';
@@ -7,6 +8,7 @@ import Axios from 'axios';
 import DatePicker from "react-datepicker"; 
 import "react-datepicker/dist/react-datepicker.css";
 import Moment from 'react-moment';
+import NumberFormat from 'react-number-format';
 
 
 
@@ -231,7 +233,8 @@ class Transaction extends Component {
           <td>{transaction.description}</td>
           <td>{transaction.categoryname}</td>       
           
-          <td>{transaction.amount}</td>
+          <td><NumberFormat value={transaction.amount} displayType={'text'} thousandSeparator={true} prefix={'$'} /></td>
+          
   
           <td>  <Moment format="YYYY/MM/DD" date={transaction.date} /></td>
           <td>
@@ -294,8 +297,8 @@ class Transaction extends Component {
             </FormGroup>
             <FormGroup>
               <Label for="category">Category</Label>
-              <div>
-              <select value={this.state.newTransactionData.categoryid} 
+              <div  >
+              <select className="select-container" value={this.state.newTransactionData.categoryid} 
               onChange={(e)=>{
                 let {newTransactionData}= this.state;
                 newTransactionData.categoryid=e.target.value;
@@ -320,7 +323,7 @@ class Transaction extends Component {
             <FormGroup>
               <Label for="date">Date</Label>
              <div>
-             <DatePicker
+             <DatePicker className="datepiker-container"
                selected={this.state.newTransactionData.date}
                onChange={this.handleNewDateChange}/>
 
@@ -353,7 +356,7 @@ class Transaction extends Component {
                   <FormGroup>
                   <Label for="category">Category</Label>
                     <div>
-                    <select value={this.state.editTransactionData.categoryid} 
+                    <select className="select-container" value={this.state.editTransactionData.categoryid} 
                     onChange={(e)=>{
                         let {editTransactionData}= this.state;
                         editTransactionData.categoryid=e.target.value;
@@ -378,7 +381,7 @@ class Transaction extends Component {
                   <FormGroup>
                   <Label for="date">Date</Label>
                     <div>
-                    <DatePicker
+                    <DatePicker className="datepiker-container"
                     selected={this.state.editTransactionData.date}
                     onChange={this.handleEditDateChange}/>
 

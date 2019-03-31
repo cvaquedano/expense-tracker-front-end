@@ -4,6 +4,8 @@ import Axios from 'axios';
 import moment from "moment";
 import Moment from 'react-moment';
 
+import NumberFormat from 'react-number-format';
+
 
 class Balance extends Component {
 
@@ -38,8 +40,10 @@ class Balance extends Component {
                <td>  <Moment format="YYYY/MM/DD" date={balnce.date} /></td>
               <td>{balnce.description}</td>
               <td>{balnce.category}</td>
-              <td>{balnce.positive}</td> 
-              <td>{balnce.negative}</td>      
+              
+              <td><NumberFormat value={balnce.positive} displayType={'text'} thousandSeparator={true} prefix={'$'} /></td>   
+               
+              <td><NumberFormat value={balnce.negative} displayType={'text'} thousandSeparator={true} prefix={'$'} /></td>   
               
             </tr>
       

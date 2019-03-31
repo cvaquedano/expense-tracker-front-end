@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {Table} from 'reactstrap'
 import Axios from 'axios';
 
+import NumberFormat from 'react-number-format';
+
 
 class Notification extends Component {
 
@@ -34,8 +36,10 @@ class Notification extends Component {
             <tr>
               <td>{notification.month}</td>
               <td>{notification.name}</td>
-              <td>{notification.total}</td>
-              <td>{notification.budget}</td>      
+             
+              <td><NumberFormat value={notification.total} displayType={'text'} thousandSeparator={true} prefix={'$'} /></td>   
+            
+              <td><NumberFormat value={notification.budget} displayType={'text'} thousandSeparator={true} prefix={'$'} /></td>   
               
             </tr>
       

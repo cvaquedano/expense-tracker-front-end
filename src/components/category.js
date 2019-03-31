@@ -3,6 +3,7 @@ import {Table, ButtonGroup} from 'reactstrap'
 import { Button,Modal, ModalHeader, ModalBody, ModalFooter,Input,FormGroup,Label } from 'reactstrap';
 import Axios from 'axios';
 
+import NumberFormat from 'react-number-format';
 class Category extends Component {
 
     constructor(props){
@@ -172,7 +173,7 @@ class Category extends Component {
         {category.type && <td>Income</td>}
         {!category.type && <td>Expense</td>}
         
-        <td>{category.budget}</td>
+        <td><NumberFormat value={category.budget} displayType={'text'} thousandSeparator={true} prefix={'$'} /></td>   
         <td>
           <Button color="success" 
                   size="sm" 
