@@ -60,12 +60,10 @@ class Category extends Component {
   refreshData(){
     Axios.get('http://localhost:3000/category').then((response)=>{
       this.setState({
-        categories:response.data
-       
+        categories:response.data       
       })    
 
     });
-
   }
 
   toggleNewCategoryModal(){
@@ -196,7 +194,7 @@ class Category extends Component {
 
     return (
       
-      <div className="App container">
+      <div className="App container container-white">
 
      
 

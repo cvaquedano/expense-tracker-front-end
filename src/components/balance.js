@@ -75,7 +75,7 @@ class Balance extends Component {
 
         let balances=this.renderBalanceItem();
         return (
-    <div className="App container">
+    <div className="App container container-white">
 
 
 

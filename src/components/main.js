@@ -8,7 +8,7 @@ import Balance from './balance';
 
 
 const Main = () => (
-  <main>
+  <main  >
     <Switch>
       <Route exact path='/' component={Home}/>
       <Route path='/category' component={Category}/>

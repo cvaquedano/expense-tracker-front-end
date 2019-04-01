@@ -55,7 +55,7 @@ class Notification extends Component {
 
         let notifications=this.renderNotificationsItem();
         return (
-    <div className="App container">
+    <div className="App container container-white">
          <Table>
         <thead>
           <tr>

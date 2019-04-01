@@ -105,8 +105,7 @@ class Transaction extends Component {
   refreshData(){
     Axios.get('http://localhost:3000/transaction').then((response)=>{
       this.setState({
-        transactions:response.data
-       
+        transactions:response.data       
       })    
 
     });
@@ -114,10 +113,16 @@ class Transaction extends Component {
   }
   getCategoryData(){
     Axios.get('http://localhost:3000/category').then((response)=>{
-      this.setState({
-        categories:response.data       
-       
-      }) 
+     
+
+      this.setState(prevState => ({
+        categories:response.data,
+        newTransactionData: {
+         
+          ...prevState.newTransactionData,
+          categoryid: response.data[0].id
+        }
+    }));
      
     });
 
@@ -275,7 +280,7 @@ class Transaction extends Component {
     return (
         
       
-      <div className="App container">
+      <div className="App container container-white">
 
 
         <Button className='my-3' color="primary" onClick={this.toggleNewTransactionModal.bind(this)}>Add Transaction</Button>
