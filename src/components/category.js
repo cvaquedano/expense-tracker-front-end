@@ -162,9 +162,8 @@ class Category extends Component {
 
   }
 
-  render() {
-
-    let categories = this.state.categories.map((category)=>{
+  renderCategoryItem(){
+    let categories=this.state.categories.map((category)=>{
       return (
       <tr key={category.id}>
         <td>{category.id}</td>
@@ -187,6 +186,13 @@ class Category extends Component {
 
       )
     });
+
+    return categories;
+  }
+
+  render() {
+
+    let categories = this.renderCategoryItem();
 
     return (
       
@@ -237,6 +243,7 @@ class Category extends Component {
               <Label for="budget">Budget</Label>
               <Input  id="budget" 
               placeholder="How much you want to expense on it?" 
+              type="number"
               value={this.state.newCategoryData.budget}
               onChange={(e)=>{
                 let {newCategoryData}= this.state;
@@ -289,7 +296,7 @@ class Category extends Component {
                   <FormGroup>
                     <Label for="budget">Budget</Label>
                     <Input  id="budget" 
-                   
+                   type="number"
                     value={this.state.editCategoryData.budget}
                     onChange={(e)=>{
                       let {editCategoryData}= this.state;

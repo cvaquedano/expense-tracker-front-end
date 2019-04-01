@@ -312,6 +312,7 @@ class Transaction extends Component {
               <Label for="amount">Amount</Label>
               <Input  id="amount" 
               placeholder="How much you want to post on it?" 
+              type="number"
               value={this.state.newTransactionData.budget}
               onChange={(e)=>{
                 let {newTransactionData}= this.state;
@@ -368,7 +369,7 @@ class Transaction extends Component {
                   <FormGroup>
                     <Label for="amount">Amount</Label>
                     <Input  id="amount" 
-                   
+                   type="number"
                     value={this.state.editTransactionData.amount}
                     onChange={(e)=>{
                       let {editTransactionData}= this.state;
