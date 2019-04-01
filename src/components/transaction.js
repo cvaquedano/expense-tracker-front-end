@@ -140,8 +140,7 @@ class Transaction extends Component {
     });
   }
 
-  toggleDeleteTransactionModal(){
-      console.log("Entro a toggleDeleteTransactionModal")
+  toggleDeleteTransactionModal(){     
     this.setState({
         deleteTransactionModal:!this.state.deleteTransactionModal
     });

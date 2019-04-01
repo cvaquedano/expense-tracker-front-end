@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import {Table} from 'reactstrap'
+import {Table,FormGroup,Label,Button} from 'reactstrap'
+
+import DatePicker from "react-datepicker"; 
 import Axios from 'axios';
 import moment from "moment";
 import Moment from 'react-moment';
@@ -11,8 +13,13 @@ class Balance extends Component {
 
     state={
         balances:[],
+        date:new Date(),
         yearAndMonth: moment(new Date()).format('YYYYMM'),
        
+      }
+      constructor(props){
+        super(props);
+        this.handleDateChange = this.handleDateChange.bind(this);
       }
 
       componentDidMount(){   
@@ -31,11 +38,21 @@ class Balance extends Component {
     
       }
 
-     
+      handleDateChange(date) {
+        this.setState({ 
+          yearAndMonth: moment(date).format('YYYYMM'),
+          date:date
+        });
+        console.log( this.state.yearAndMonth);
+        console.log( date)
+       
+      }
 
-      renderBudgetItem(){
+      renderBalanceItem(){
         let balances = this.state.balances.map((balnce)=>{
             return (
+
+
             <tr key={balnce.transactionid} >
                <td>  <Moment format="YYYY/MM/DD" date={balnce.date} /></td>
               <td>{balnce.description}</td>
@@ -56,9 +73,29 @@ class Balance extends Component {
 
     render(){
 
-        let balances=this.renderBudgetItem();
+        let balances=this.renderBalanceItem();
         return (
     <div className="App container">
+
+
+
+          <FormGroup>
+            <Label for="date">Date</Label>
+            <div>
+              <DatePicker className="datepiker-container"
+                selected={this.state.date}
+                onChange={this.handleDateChange}/>
+               
+                <Button  className="ml-2"    color="primary" onClick={this.refreshData.bind(this)}>Generate Balance</Button>{' '}
+
+               
+
+            
+            </div>
+          </FormGroup>
+
+
+
          <Table>
         <thead>
           <tr>
@@ -73,7 +110,7 @@ class Balance extends Component {
         </thead>
 
         <tbody>
-         {balances}
+        { balances.length>1 && balances}
 
         </tbody>
       </Table>
