@@ -2,16 +2,14 @@ import React, { Component } from 'react';
 import {Table, ButtonGroup} from 'reactstrap'
 import { Button,Modal, ModalHeader, ModalBody, ModalFooter,Input,FormGroup,Label } from 'reactstrap';
 import Axios from 'axios';
-
+import config from 'react-global-configuration';
 import NumberFormat from 'react-number-format';
 class Category extends Component {
 
-    constructor(props){
-        super(props);
-        this.onRadioBtnClick = this.onNewRadioBtnClick.bind(this);
-    }
+   
 
   state={
+    url:config.get('apiDomain'),
     categories:[],
     newCategoryData:{
       name:'',
@@ -34,6 +32,11 @@ class Category extends Component {
     editCategoryModal:false,
     deleteCategoryModal:false
   }
+
+  constructor(props){
+    super(props);
+    this.onRadioBtnClick = this.onNewRadioBtnClick.bind(this);
+}
 
   onNewRadioBtnClick(rSelected) {
     this.setState(prevState => ({
@@ -58,7 +61,8 @@ class Category extends Component {
   }
 
   refreshData(){
-    Axios.get('http://localhost:3000/category').then((response)=>{
+   
+    Axios.get(this.state.url +'/category').then((response)=>{
       this.setState({
         categories:response.data       
       })    
@@ -86,7 +90,7 @@ class Category extends Component {
   }
 
   postCategory(){
-    Axios.post('http://localhost:3000/category',this.state.newCategoryData).then((response)=>{
+    Axios.post(this.state.url +'/category',this.state.newCategoryData).then((response)=>{
       this.refreshData();
       this.setState({
        
@@ -105,7 +109,7 @@ class Category extends Component {
   putCategory(){
     let {name,description,type,budget} = this.state.editCategoryData;
 
-    Axios.put('http://localhost:3000/category/' + this.state.editCategoryData.id,{
+    Axios.put(this.state.url +'/category/' + this.state.editCategoryData.id,{
       name,
       description,
       type,
@@ -129,7 +133,7 @@ class Category extends Component {
 
   deteleCategoryOnBd(){
 
-    Axios.delete('http://localhost:3000/category/' + this.state.deleteCategoryData.id).then((response)=>{
+    Axios.delete(this.state.url +'/category/' + this.state.deleteCategoryData.id).then((response)=>{
 
       this.refreshData();
 

@@ -5,6 +5,7 @@ import "./style.css";
 import { Button,Modal, ModalHeader, ModalBody, ModalFooter,Input,FormGroup,Label } from 'reactstrap';
 import Axios from 'axios';
 
+import config from 'react-global-configuration';
 import DatePicker from "react-datepicker"; 
 import "react-datepicker/dist/react-datepicker.css";
 import Moment from 'react-moment';
@@ -15,35 +16,8 @@ import NumberFormat from 'react-number-format';
 
 class Transaction extends Component {
 
-    constructor(props){
-        super(props);
-        this.onRadioBtnClick = this.onNewRadioBtnClick.bind(this);
-        this.handleNewDateChange = this.handleNewDateChange.bind(this);
-        this.handleEditDateChange = this.handleEditDateChange.bind(this);
-      
-    }
-    
-    handleNewDateChange(date) {
-        this.setState(prevState => ({
-            newTransactionData: {
-                ...prevState.newTransactionData,
-                date: date
-            }
-        }));
-      }
-
-      handleEditDateChange(date) {
-        this.setState(prevState => ({
-            editTransactionData: {
-                ...prevState.editTransactionData,
-                date: date
-            }
-        }));
-      }
-
-      
-
   state={
+    url:config.get('apiDomain'),
     categories:[],  
     transactions:[],
 
@@ -67,6 +41,37 @@ class Transaction extends Component {
     newTransactionModal:false,
     editTransactionModal:false,
     deleteTransactionModal:false
+  }
+
+  constructor(props){
+    super(props);
+    this.onRadioBtnClick = this.onNewRadioBtnClick.bind(this);
+    this.handleNewDateChange = this.handleNewDateChange.bind(this);
+    this.handleEditDateChange = this.handleEditDateChange.bind(this);
+  
+}
+
+componentDidMount(){
+  this.refreshData();
+  this.getCategoryData();
+}
+
+handleNewDateChange(date) {
+    this.setState(prevState => ({
+        newTransactionData: {
+            ...prevState.newTransactionData,
+            date: date
+        }
+    }));
+  }
+
+  handleEditDateChange(date) {
+    this.setState(prevState => ({
+        editTransactionData: {
+            ...prevState.editTransactionData,
+            date: date
+        }
+    }));
   }
 
   onNewRadioBtnClick(rSelected) {
@@ -97,40 +102,7 @@ class Transaction extends Component {
   }
 
 
-  componentDidMount(){
-    this.refreshData();
-    this.getCategoryData();
-  }
 
-  refreshData(){
-    Axios.get('http://localhost:3000/transaction').then((response)=>{
-      this.setState({
-        transactions:response.data       
-      })    
-
-    });
-
-  }
-  getCategoryData(){
-    Axios.get('http://localhost:3000/category').then((response)=>{
-     
-
-      this.setState(prevState => ({
-        categories:response.data,
-        newTransactionData: {
-         
-          ...prevState.newTransactionData,
-          categoryid: response.data[0].id
-        }
-    }));
-     
-    });
-
-  }
-
-  
-
- 
 
   toggleNewTransactionModal(){
     this.setState({
@@ -151,8 +123,33 @@ class Transaction extends Component {
     });
   }
 
+  refreshData(){
+    Axios.get(this.state.url +'/transaction').then((response)=>{
+      this.setState({
+        transactions:response.data       
+      })    
+
+    });
+
+  }
+  getCategoryData(){
+    Axios.get(this.state.url +'/category').then((response)=>{     
+
+      this.setState(prevState => ({
+        categories:response.data,
+        newTransactionData: {
+         
+          ...prevState.newTransactionData,
+          categoryid: response.data[0].id
+        }
+    }));
+     
+    });
+
+  }
+
   postTransaction(){
-    Axios.post('http://localhost:3000/transaction',this.state.newTransactionData).then((response)=>{
+    Axios.post(this.state.url +'/transaction',this.state.newTransactionData).then((response)=>{
       this.refreshData();
       this.setState({
        
@@ -171,7 +168,7 @@ class Transaction extends Component {
   putTransaction(){
     let {description,categoryid,amount,date} = this.state.editTransactionData;
 
-    Axios.put('http://localhost:3000/transaction/' + this.state.editTransactionData.id,{
+    Axios.put(this.state.url +'/transaction/' + this.state.editTransactionData.id,{
         description,
         categoryid,
         amount,
@@ -233,7 +230,7 @@ class Transaction extends Component {
     let transactions = this.state.transactions.map((transaction)=>{
         return (
         <tr key={transaction.id}>
-          <td>{transaction.id}</td>
+         
           <td>{transaction.description}</td>
           <td>{transaction.categoryname}</td>       
           
@@ -419,7 +416,7 @@ class Transaction extends Component {
       <Table>
         <thead>
           <tr>
-            <th>Id</th>
+           
             <th>Description</th>
             <th>Category</th>
             <th>Amount</th>

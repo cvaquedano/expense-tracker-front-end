@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import {Table} from 'reactstrap'
 import Axios from 'axios';
 
+import config from 'react-global-configuration';
 import NumberFormat from 'react-number-format';
 
 
 class Notification extends Component {
 
     state={
+      url:config.get('apiDomain'),
         notifications:[],         
       }
 
@@ -17,7 +19,7 @@ class Notification extends Component {
       }
 
       refreshData(){
-        Axios.get('http://localhost:3000/notification').then((response)=>{
+        Axios.get(this.state.url +'/notification').then((response)=>{
           this.setState({
             notifications:response.data           
           })    

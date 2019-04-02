@@ -6,12 +6,14 @@ import Axios from 'axios';
 import moment from "moment";
 import Moment from 'react-moment';
 
+import config from 'react-global-configuration';
 import NumberFormat from 'react-number-format';
 
 
 class Balance extends Component {
 
     state={
+      url:config.get('apiDomain'),
         balances:[],
         date:new Date(),
         yearAndMonth: moment(new Date()).format('YYYYMM'),
@@ -22,6 +24,7 @@ class Balance extends Component {
         this.handleDateChange = this.handleDateChange.bind(this);
       }
 
+      
       componentDidMount(){   
           this.refreshData();
       }
@@ -29,7 +32,7 @@ class Balance extends Component {
      
       refreshData(){
          
-        Axios.get('http://localhost:3000/balance/' + this.state.yearAndMonth).then((response)=>{
+        Axios.get(this.state.url +'/balance/' + this.state.yearAndMonth).then((response)=>{
           this.setState({
             balances:response.data           
           })    
