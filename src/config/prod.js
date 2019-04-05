@@ -1,3 +1,3 @@
 export default{
-    apiDomain:'http://localhost:3000'
+    apiDomain:'http://production'
 }

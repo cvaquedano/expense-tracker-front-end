@@ -4,6 +4,7 @@ import { Button,Modal, ModalHeader, ModalBody, ModalFooter,Input,FormGroup,Label
 import Axios from 'axios';
 import config from 'react-global-configuration';
 import NumberFormat from 'react-number-format';
+import CategoryItem from './category-item';
 class Category extends Component {
 
    
@@ -78,6 +79,7 @@ class Category extends Component {
   }
 
   toggleEditCategoryModal(){
+    
     this.setState({
       editCategoryModal:!this.state.editCategoryModal
     });
@@ -156,42 +158,34 @@ class Category extends Component {
     });
   }
 
+ 
   editCategory(id,name,description,type,budget){
+   
     this.setState({
       editCategoryData:{id,name,description,type,budget},
       editCategoryModal:!this.state.editCategoryModal
     });
-
   }
 
   renderCategoryItem(){
-    let categories=this.state.categories.map((category)=>{
-      return (
-      <tr key={category.id}>
-        <td>{category.id}</td>
-        <td>{category.name}</td>
-        <td>{category.description}</td>
-        {category.type && <td>Income</td>}
-        {!category.type && <td>Expense</td>}
-        
-        <td><NumberFormat value={category.budget} displayType={'text'} thousandSeparator={true} prefix={'$'} /></td>   
-        <td>
-          <Button color="success" 
-                  size="sm" 
-                  className="mr-2" 
-                  onClick={this.editCategory.bind(this,category.id,category.name,category.description,category.type,category.budget)}>
-                  Edit
-          </Button>
-          <Button color="danger" size="sm" onClick={this.deleteCategory.bind(this,category.id,category.name)} >Delete</Button>
-        </td>
-      </tr>
+    let categories=
+    this.state.categories.map(category=>(
+      
+      <CategoryItem
+      key={category.id}
+      category={category}
+      editCategoryModal={this.state.editCategoryModal}
+      onDelete={this.deleteCategory.bind(this)}
+      onEdit={this.editCategory.bind(this)}
 
-      )
-    });
+      
+      />
+    ))
 
     return categories;
   }
 
+ 
   render() {
 
     let categories = this.renderCategoryItem();
