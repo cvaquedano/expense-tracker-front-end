@@ -9,8 +9,13 @@ class CategoryItem extends Component {
 
    }
 
+   customDelete(id,name){
+    this.props.onDelete(id,name)
+
+}
+
     render(){
-        const {category,onDelete}= this.props;
+        const {category}= this.props;
         return (
             <tr key={category.id}>
               <td>{category.id}</td>
@@ -27,7 +32,7 @@ class CategoryItem extends Component {
                         onClick={this.customEdit.bind(this,category.id,category.name,category.description,category.type,category.budget)}>
                         Edit
                 </Button>
-                <Button color="danger" size="sm" onClick={onDelete.bind(this,category.id,category.name)} >Delete</Button>
+                <Button color="danger" size="sm" onClick={this.customDelete.bind(this,category.id,category.name)} >Delete</Button>
               </td>
             </tr>
       

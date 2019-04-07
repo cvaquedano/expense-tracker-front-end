@@ -174,7 +174,6 @@ class Category extends Component {
       <CategoryItem
       key={category.id}
       category={category}
-      editCategoryModal={this.state.editCategoryModal}
       onDelete={this.deleteCategory.bind(this)}
       onEdit={this.editCategory.bind(this)}
 
