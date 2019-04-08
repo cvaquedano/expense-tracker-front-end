@@ -1,3 +1,3 @@
 export default{
-    apiDomain:'http://localhost:3000'
+    apiDomain:'http://ec2-18-191-91-13.us-east-2.compute.amazonaws.com:3000'
 }
