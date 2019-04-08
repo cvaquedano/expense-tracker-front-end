@@ -1,0 +1,14 @@
+{
+    "prod": {
+        "awscloudformation": {
+            "AuthRoleName": "expense-tracker-app-20190408143924-authRole",
+            "UnauthRoleArn": "arn:aws:iam::361156186340:role/expense-tracker-app-20190408143924-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::361156186340:role/expense-tracker-app-20190408143924-authRole",
+            "Region": "us-east-2",
+            "DeploymentBucketName": "expense-tracker-app-20190408143924-deployment",
+            "UnauthRoleName": "expense-tracker-app-20190408143924-unauthRole",
+            "StackName": "expense-tracker-app-20190408143924",
+            "StackId": "arn:aws:cloudformation:us-east-2:361156186340:stack/expense-tracker-app-20190408143924/75031800-5a3e-11e9-be3e-02649197f7a0"
+        }
+    }
+}
