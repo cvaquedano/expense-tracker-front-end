@@ -2,11 +2,14 @@ import React,{ Component } from 'react'
 import { Jumbotron, Button,ButtonToolbar } from 'reactstrap';
 import Axios from 'axios';
 
+import config from 'react-global-configuration';
+
 import { UncontrolledAlert  } from 'reactstrap';
 
 class Home extends Component {
 
   state={
+    url:config.get('apiDomain'),
     notifications:[]
 
   }
