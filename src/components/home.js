@@ -19,7 +19,7 @@ class Home extends Component {
   }
 
   refreshData(){
-    Axios.get('http://localhost:3000/notification').then((response)=>{
+    Axios.get(this.state.url +'/notification').then((response)=>{
       this.setState({
         notifications:response.data           
       })    
