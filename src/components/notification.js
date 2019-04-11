@@ -58,7 +58,7 @@ class Notification extends Component {
         let notifications=this.renderNotificationsItem();
         return (
     <div className="App container container-white">
-         <Table>
+         <Table responsive>
         <thead>
           <tr>
             <th>Month</th>            

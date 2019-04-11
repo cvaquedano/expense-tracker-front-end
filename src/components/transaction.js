@@ -282,7 +282,7 @@ handleNewDateChange(date) {
 
         <Button className='my-3' color="primary" onClick={this.toggleNewTransactionModal.bind(this)}>Add Transaction</Button>
 
-        <Modal isOpen={this.state.newTransactionModal} toggle={this.toggleNewTransactionModal.bind(this)}>
+        <Modal responsive isOpen={this.state.newTransactionModal} toggle={this.toggleNewTransactionModal.bind(this)}>
           <ModalHeader toggle={this.toggleNewTransactionModal.bind(this)}>Add Transaction</ModalHeader>
           <ModalBody>           
             <FormGroup>
@@ -340,7 +340,7 @@ handleNewDateChange(date) {
           </ModalFooter>
         </Modal>
         
-        <Modal isOpen={this.state.editTransactionModal} toggle={this.toggleEditTransactionModal.bind(this)}>
+        <Modal responsive isOpen={this.state.editTransactionModal} toggle={this.toggleEditTransactionModal.bind(this)}>
                 <ModalHeader toggle={this.toggleEditTransactionModal.bind(this)}>Edit Transaction</ModalHeader>
                 <ModalBody>
                   
@@ -397,7 +397,7 @@ handleNewDateChange(date) {
                 </ModalFooter>
               </Modal>
 
-        <Modal isOpen={this.state.deleteTransactionModal} toggle={this.toggleDeleteTransactionModal.bind(this)}>
+        <Modal responsive isOpen={this.state.deleteTransactionModal} toggle={this.toggleDeleteTransactionModal.bind(this)}>
                 <ModalHeader toggle={this.toggleDeleteTransactionModal.bind(this)}>Delete Transaction</ModalHeader>
                 <ModalBody>
                   <FormGroup>
@@ -413,7 +413,7 @@ handleNewDateChange(date) {
               </Modal>
 
 
-      <Table>
+      <Table responsive>
         <thead>
           <tr>
            

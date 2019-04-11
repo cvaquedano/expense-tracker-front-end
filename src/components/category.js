@@ -197,7 +197,7 @@ class Category extends Component {
 
         <Button className='my-3' color="primary" onClick={this.toggleNewCategoryModal.bind(this)}>Add Category</Button>
 
-        <Modal isOpen={this.state.newCategoryModal} toggle={this.toggleNewCategoryModal.bind(this)}>
+        <Modal responsive isOpen={this.state.newCategoryModal} toggle={this.toggleNewCategoryModal.bind(this)}>
           <ModalHeader toggle={this.toggleNewCategoryModal.bind(this)}>Add Category</ModalHeader>
           <ModalBody>
             <FormGroup>
@@ -253,7 +253,7 @@ class Category extends Component {
           </ModalFooter>
         </Modal>
         
-        <Modal isOpen={this.state.editCategoryModal} toggle={this.toggleEditCategoryModal.bind(this)}>
+        <Modal responsive isOpen={this.state.editCategoryModal} toggle={this.toggleEditCategoryModal.bind(this)}>
                 <ModalHeader toggle={this.toggleEditCategoryModal.bind(this)}>Edit Category</ModalHeader>
                 <ModalBody>
                   <FormGroup>
@@ -325,7 +325,7 @@ class Category extends Component {
 
 
 
-      <Table>
+      <Table responsive>
         <thead>
           <tr>
             <th>Id</th>

@@ -9,6 +9,8 @@ import Moment from 'react-moment';
 import config from 'react-global-configuration';
 import NumberFormat from 'react-number-format';
 
+import BalanceChar from './balance-char';
+
 
 class Balance extends Component {
 
@@ -99,7 +101,7 @@ class Balance extends Component {
 
 
 
-         <Table>
+         <Table responsive>
         <thead>
           <tr>
             <th>Date</th>            
